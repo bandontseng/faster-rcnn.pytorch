@@ -153,7 +153,8 @@ class _AnchorTargetLayer(nn.Module):
         bbox_inside_weights[labels==1] = cfg.TRAIN.RPN_BBOX_INSIDE_WEIGHTS[0]
 
         if cfg.TRAIN.RPN_POSITIVE_WEIGHT < 0:
-            num_examples = torch.sum(labels[i] >= 0)
+            num_examples = torch.sum(labels[i] >= 0).item()  # for 0.4.0
+            # num_examples = torch.sum(labels[i] >= 0)  # for 0.3.0
             positive_weights = 1.0 / num_examples
             negative_weights = 1.0 / num_examples
         else:

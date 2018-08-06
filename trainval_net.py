@@ -42,8 +42,8 @@ def parse_args():
                       help='training dataset',
                       default='pascal_voc', type=str)
   parser.add_argument('--net', dest='net',
-                    help='vgg16, res101',
-                    default='vgg16', type=str)
+                      help='vgg16, res101',
+                      default='vgg16', type=str)
   parser.add_argument('--start_epoch', dest='start_epoch',
                       help='starting epoch',
                       default=1, type=int)
@@ -58,23 +58,23 @@ def parse_args():
                       default=10000, type=int)
 
   parser.add_argument('--save_dir', dest='save_dir',
-                      help='directory to save models', default="/srv/share/jyang375/models",
+                      help='directory to save models', default="result",
                       type=str)
   parser.add_argument('--nw', dest='num_workers',
                       help='number of worker to load data',
-                      default=0, type=int)
+                      default=8, type=int)
   parser.add_argument('--cuda', dest='cuda',
                       help='whether use CUDA',
                       action='store_true')
   parser.add_argument('--ls', dest='large_scale',
                       help='whether use large imag scale',
-                      action='store_true')                      
+                      action='store_true')
   parser.add_argument('--mGPUs', dest='mGPUs',
                       help='whether use multiple GPUs',
                       action='store_true')
   parser.add_argument('--bs', dest='batch_size',
                       help='batch_size',
-                      default=1, type=int)
+                      default=4, type=int)
   parser.add_argument('--cag', dest='class_agnostic',
                       help='whether perform class_agnostic bbox regression',
                       action='store_true')
@@ -212,6 +212,7 @@ if __name__ == '__main__':
 
   dataset = roibatchLoader(roidb, ratio_list, ratio_index, args.batch_size, \
                            imdb.num_classes, training=True)
+
 
   dataloader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size,
                             sampler=sampler_batch, num_workers=args.num_workers)
